@@ -8,7 +8,7 @@ MAINTAINER Gary Leong <gwleong@gmail.com>
 ENV LANG=en_US.UTF-8
 
 RUN echo "Configuring locale" && \
-RUN apt-get install -y locales && \
+    apt-get install -y locales && \
     sed -i -e "s/# $LANG.*/$LANG.UTF-8 UTF-8/" /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale LANG=$LANG
