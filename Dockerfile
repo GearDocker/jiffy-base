@@ -4,13 +4,23 @@ MAINTAINER Gary Leong <gwleong@gmail.com>
 ############################################################
 #####Basic Pkgs - Public
 ############################################################
-RUN echo "Installing Basic Pkgs" && \
+
+ENV LANG=en_US.UTF-8
+
+RUN echo "Configuring locale" && \
+RUN apt-get install -y locales && \
+    sed -i -e "s/# $LANG.*/$LANG.UTF-8 UTF-8/" /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=$LANG
+
+RUN echo "Configuring locale further and adding Ubuntu key" && \
     locale-gen en_US.UTF-8 && \
-    dpkg-reconfigure locales && \
-    export  LANG=en_US.UTF-8 && \
-    export  LANGUAGE=en_US && \
-    export  LC_ALL=en_US.UTF-8 && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
+    export LANG=en_US.UTF-8 && \
+    export LANGUAGE=en_US && \
+    export LC_ALL=en_US.UTF-8 && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 
+
+RUN echo "Installing Basic Pkgs" && \
     apt-get update && \
     apt-get install -y pwgen wget curl git-core build-essential scons devscripts lintian dh-make \
     libpcre3 libpcre3-dev libboost-dev libboost-date-time-dev libboost-filesystem-dev \
