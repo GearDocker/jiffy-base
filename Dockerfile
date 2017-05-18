@@ -1,4 +1,4 @@
-FROM gear2000/chef-solo:16.04
+FROM gear2000/chef-solo
 MAINTAINER Gary Leong <gwleong@gmail.com>
 
 ############################################################
