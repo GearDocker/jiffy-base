@@ -22,9 +22,9 @@ RUN echo "Installing Docker Pkgs" && \
     apt-get -y install docker.io 
 
 # Install docker-compose
-RUN sh -c "curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose" && \
+RUN sh -c "curl -L https://github.com/docker/compose/releases/download/1.8.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose" && \
     chmod +x /usr/local/bin/docker-compose
-RUN sh -c "curl -L https://raw.githubusercontent.com/docker/compose/1.4.2/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose" 
+RUN sh -c "curl -L https://raw.githubusercontent.com/docker/compose/1.8.1/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose" 
 
 RUN mkdir -p /var/run/sshd /var/log/supervisor
 ############################################################
