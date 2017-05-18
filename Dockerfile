@@ -38,7 +38,6 @@ RUN apt-get update && \
 
 #RUN pip uninstall gnupg -y 
 #Must install and uninstall pymongo several times
-RUN pip uninstall pymongo -y 
 RUN pip install pymongo==2.7.2
 RUN pip uninstall pymongo -y
 RUN pip install pymongo==2.7.2
