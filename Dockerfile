@@ -52,8 +52,6 @@ RUN pip install pymongo==2.7.2
 RUN pip uninstall pymongo -y
 RUN pip install pymongo==2.7.2
 
-COPY var/tmp/docker/jiffy/tarballs/selfcontained /var/tmp/jiffy
-
 ADD requirements.txt /var/tmp/requirements.txt
 ADD Gemfile /var/tmp/Gemfile
 RUN cd /var/tmp/ && bundle install
