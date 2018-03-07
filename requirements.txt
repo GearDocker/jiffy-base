@@ -51,4 +51,4 @@ WTForms==2.0.2
 #JiffyAWS==0.1.dev0
 #JiffyCommon==0.1.dev0
 #JiffyMongoDb==0.1.dev0
-
+#JiffyQueue==0.1.dev0
