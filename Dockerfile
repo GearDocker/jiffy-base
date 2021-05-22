@@ -4,9 +4,9 @@ MAINTAINER Gary Leong <gwleong@gmail.com>
 RUN apt-get update -y && \
     apt-get install autoconf make htop vim sysstat git zip wget python-dev \
                     rng-tools haveged python-setuptools curl python-yaml \
-                    python-pip software-properties-common -y || rm -rf /var/lib/apt/lists/*
+                    python-pip software-properties-common rsync zip -y || rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update -y && apt-get install nodejs npm -y
+RUN apt-get update -y && apt-get install nodejs npm -y || rm -rf /var/lib/apt/lists/*
 
 ENV LANG en_US.UTF-8 
 ENV LANGUAGE en_US
