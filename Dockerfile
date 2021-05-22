@@ -1,75 +1,25 @@
-FROM ubuntu:18.04
+FROM python:2.7-alpine
 MAINTAINER Gary Leong <gwleong@gmail.com>
-
-RUN apt-get update -y && \
-    apt-get install autoconf make htop vim sysstat git zip wget python-dev \
-                    rng-tools haveged python-setuptools curl python-yaml \
-                    python-pip software-properties-common rsync zip -y || rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update -y && apt-get install nodejs npm -y || rm -rf /var/lib/apt/lists/*
 
 ENV LANG en_US.UTF-8 
 ENV LANGUAGE en_US
 ENV LC_ALL en_US.UTF-8
 
-#RUN pip install psutil 
-#RUN pip install argparse==1.2.1
-#RUN pip install paramiko==1.17.4
-#RUN pip install pymongo==3.7.1 
+RUN apk add --no-cache bash
+RUN apk add --no-cache rsync
 
-# "install docker"
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - 
-RUN apt-key fingerprint 0EBFCD88 
-RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-	                    $(lsb_release -cs) \
-	                    stable"
+#RUN apk add --no-cache openssh-server
+#RUN apk add --no-cache wget
+#RUN apk add --no-cache git
+#RUN apk add --no-cache curl
+#RUN apk add --no-cache vim
+#RUN apk add --no-cache pwgen
+#RUN apk add --no-cache rng-tools
+#RUN apk add --no-cache haveged
+#RUN apk add --no-cache gnupg 
+#RUN apk add --no-cache gcc g++ make libffi-dev openssl-dev rsync
 
-RUN apt-get update -y && apt-get install docker-ce -y
-
-# Install Ansible
-RUN pip install ansible
-RUN pip install awslogs
-
-RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
-
-# Install Terraform
-RUN cd /tmp && wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.14.6_linux_amd64.zip && \
-    unzip terraform_0.14.6_linux_amd64.zip && \
-    mv terraform /usr/local/bin/
-
-#RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
-#    apt install nodejs -y
-
-RUN mkdir -p /share/local /opt/helpers /opt/references /opt/scripts/serverless /opt/scripts/terraform
-COPY templates /opt/
-COPY setup_serverless.sh /opt/scripts/serverless/setup.sh
-COPY create_terraform.sh /opt/scripts/terraform/create.sh
-COPY destroy_terraform.sh /opt/scripts/terraform/destroy.sh
-
-COPY package.json /opt/templates/serverless/
-
-RUN cd /opt/templates/serverless && \
-    npm i -D serverless-dotenv-plugin && \
-    npm install --save-dev serverless-python-requirements && \
-    npm install --save-dev serverless-domain-manager && \
-    npm install --save-dev serverless-wsgi 
-
-#RUN cd /opt/templates/serverless && \
-#    ./setup_serverless.sh
-
-#RUN cd /opt/templates/serverless && \
-#    sls create --template aws-nodejs --path serverless-template-project
-
-RUN npm install -g serverless@1.82.0
-RUN echo "" && terraform --version
-RUN echo "" && ansible --version
-RUN echo "" && serverless --version
-
-#root@serverless-deploy:/opt/dev/engine-aws-lambda# serverless --version
-#Framework Core: 1.82.0 (standalone)
-#Plugin: 3.8.3
-#SDK: 2.3.1
-#Components: 2.34.9
-
-# Check that it's installed
+RUN python -m pip install --upgrade pip
+RUN pip install awscli
+#RUN pip install awslogs
+#RUN python --version
