@@ -54,8 +54,8 @@ RUN cd /opt/templates/serverless && \
 #RUN cd /opt/templates/serverless && \
 #    ./setup_serverless.sh
 
-RUN cd /opt/templates/serverless && \
-    sls create --template aws-nodejs --path serverless-template-project
+#RUN cd /opt/templates/serverless && \
+#    sls create --template aws-nodejs --path serverless-template-project
 
 RUN npm install -g serverless@1.82.0
 RUN echo "" && terraform --version
