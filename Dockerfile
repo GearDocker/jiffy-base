@@ -41,14 +41,18 @@ RUN cd /tmp && wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.
 #RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
 #    apt install nodejs -y
 
-RUN mkdir -p /opt/templates/serverless /share/local
+RUN mkdir -p /share/local /opt/helpers /opt/references /opt/scripts/serverless /opt/scripts/terraform
+COPY templates /opt/
+COPY setup_serverless.sh /opt/scripts/serverless/setup.sh
+COPY create_terraform.sh /opt/scripts/terraform/create.sh
+COPY destroy_terraform.sh /opt/scripts/terraform/destroy.sh
+
 COPY package.json /opt/templates/serverless/
-COPY setup_serverless.sh /opt/templates/serverless/
 
 RUN cd /opt/templates/serverless && \
     npm i -D serverless-dotenv-plugin && \
     npm install --save-dev serverless-python-requirements && \
-    npm install serverless-domain-manager --save-dev && \
+    npm install --save-dev serverless-domain-manager && \
     npm install --save-dev serverless-wsgi 
 
 #RUN cd /opt/templates/serverless && \
