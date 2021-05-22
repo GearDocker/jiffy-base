@@ -47,11 +47,14 @@ COPY package.json /opt/templates/serverless/
 RUN cd /opt/templates/serverless && \
     npm i -D serverless-dotenv-plugin && \
     npm install --save-dev serverless-python-requirements && \
-    npm install --save-dev serverless-wsgi && \
-    sls create --template aws-nodejs --path serverless-template-project && \
-    cd serverless-template-project && \
-    sls plugin install -n serverless-wsgi@1.5.3 && \
     npm install serverless-domain-manager --save-dev && \
+    npm install --save-dev serverless-wsgi 
+
+RUN cd /opt/templates/serverless && \
+    sls create --template aws-nodejs --path serverless-template-project 
+
+RUN cd /opt/templates/serverless/serverless-template-project && \
+    sls plugin install -n serverless-wsgi@1.5.3 && \
 
 RUN npm install -g serverless@1.82.0
 RUN echo "" && terraform --version
