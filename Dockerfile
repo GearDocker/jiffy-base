@@ -1,25 +1,32 @@
-FROM python:2.7-alpine
+FROM python:2.7-slim-buster
 MAINTAINER Gary Leong <gwleong@gmail.com>
 
-ENV LANG en_US.UTF-8 
-ENV LANGUAGE en_US
-ENV LC_ALL en_US.UTF-8
+RUN apt-get update --fix-missing && DEBIAN_FRONTEND=noninteractive apt-get install -y locales
 
-RUN apk add --no-cache bash
-RUN apk add --no-cache rsync
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
 
-#RUN apk add --no-cache openssh-server
-#RUN apk add --no-cache wget
-#RUN apk add --no-cache git
-#RUN apk add --no-cache curl
-#RUN apk add --no-cache vim
-#RUN apk add --no-cache pwgen
-#RUN apk add --no-cache rng-tools
-#RUN apk add --no-cache haveged
-#RUN apk add --no-cache gnupg 
-#RUN apk add --no-cache gcc g++ make libffi-dev openssl-dev rsync
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8    
+
+RUN apt-get update && apt-get install bash \
+                                      rsync \
+                                      wget \
+                                      zip -y
+
+#curl \
+#vim \
+#gpg \
+#git -y
+
+# Install Terraform
+#RUN cd /tmp && wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.14.6_linux_amd64.zip && \
+#    unzip terraform_0.14.6_linux_amd64.zip && \
+#    mv terraform /usr/local/bin/
 
 RUN python -m pip install --upgrade pip
+
 RUN pip install awscli
-#RUN pip install awslogs
-#RUN python --version
+RUN pip install awslogs
