@@ -51,8 +51,11 @@ RUN cd /opt/templates/serverless && \
     npm install serverless-domain-manager --save-dev && \
     npm install --save-dev serverless-wsgi 
 
+#RUN cd /opt/templates/serverless && \
+#    ./setup_serverless.sh
+
 RUN cd /opt/templates/serverless && \
-    ./setup_serverless.sh
+    sls create --template aws-nodejs --path serverless-template-project
 
 RUN npm install -g serverless@1.82.0
 RUN echo "" && terraform --version
