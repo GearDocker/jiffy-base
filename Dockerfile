@@ -43,6 +43,7 @@ RUN cd /tmp && wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.
 
 RUN mkdir -p /opt/templates/serverless /share/local
 COPY package.json /opt/templates/serverless/
+COPY setup_serverless.sh /opt/templates/serverless/
 
 RUN cd /opt/templates/serverless && \
     npm i -D serverless-dotenv-plugin && \
@@ -51,10 +52,7 @@ RUN cd /opt/templates/serverless && \
     npm install --save-dev serverless-wsgi 
 
 RUN cd /opt/templates/serverless && \
-    sls create --template aws-nodejs --path serverless-template-project 
-
-RUN cd /opt/templates/serverless/serverless-template-project && \
-    sls plugin install -n serverless-wsgi@1.5.3 && \
+    ./setup_serverless.sh
 
 RUN npm install -g serverless@1.82.0
 RUN echo "" && terraform --version
