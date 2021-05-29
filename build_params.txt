@@ -1,0 +1,1 @@
+export DOCKER_IMAGE=gear2000/jiffy-base:alpine
