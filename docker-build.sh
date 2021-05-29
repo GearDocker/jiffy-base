@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export DOCKER_IMAGE=gear2000/jiffy-base:builds.ubuntu.18.04
 #source /tmp/.credentials/docker/gear2000-token.txt 
+source ./build_params.txt
 
 docker build -t $DOCKER_IMAGE . || exit 9
 
