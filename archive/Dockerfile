@@ -12,6 +12,11 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US
 ENV LC_ALL en_US.UTF-8
 
+#RUN pip install psutil 
+#RUN pip install argparse==1.2.1
+#RUN pip install paramiko==1.17.4
+#RUN pip install pymongo==3.7.1 
+
 # "install docker"
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - 
 RUN apt-key fingerprint 0EBFCD88 
@@ -28,12 +33,17 @@ RUN pip install awslogs
 RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
 
-# Install Terrafor
+# Install Terraform
 RUN cd /tmp && wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.14.6_linux_amd64.zip && \
     unzip terraform_0.14.6_linux_amd64.zip && \
     mv terraform /usr/local/bin/
 
+#RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
+#    apt install nodejs -y
+
 RUN mkdir -p /share/local /opt/helpers /opt/references /opt/scripts/serverless /opt/scripts/terraform
+COPY templates /opt/
+COPY setup_serverless.sh /opt/scripts/serverless/setup.sh
 COPY create_terraform.sh /opt/scripts/terraform/create.sh
 COPY destroy_terraform.sh /opt/scripts/terraform/destroy.sh
 
@@ -45,6 +55,12 @@ RUN cd /opt/templates/serverless && \
     npm install --save-dev serverless-python-requirements && \
     npm install --save-dev serverless-domain-manager && \
     npm install --save-dev serverless-wsgi 
+
+#RUN cd /opt/templates/serverless && \
+#    ./setup_serverless.sh
+
+#RUN cd /opt/templates/serverless && \
+#    sls create --template aws-nodejs --path serverless-template-project
 
 RUN npm install -g serverless@1.82.0
 RUN echo "" && terraform --version
