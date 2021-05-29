@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ./build_params.txt
 #source /tmp/.credentials/docker/gear2000-token.txt 
+source ./build_params.txt
 
 docker build -t $DOCKER_IMAGE . || exit 9
 
