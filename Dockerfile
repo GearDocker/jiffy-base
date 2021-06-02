@@ -41,15 +41,15 @@ COPY destroy_terraform.sh /var/scripts/terraform/destroy.sh
 COPY package.json /var/templates/serverless/
 
 RUN cd /var/templates/serverless && \
-    npm i -D serverless-dotenv-plugin && \
+    npm install -g serverless && \
+    npm install --save-dev serverless-dotenv-plugin && \
     npm install --save-dev serverless-python-requirements && \
     npm install --save-dev serverless-domain-manager && \
     npm install --save-dev serverless-wsgi 
 
-RUN npm install -g serverless@1.82.0
-RUN echo "" && terraform --version
-RUN echo "" && ansible --version
-RUN echo "" && serverless --version
+RUN echo "" && terraform --version && \
+    echo "" && ansible --version && \
+    echo "" && serverless --version
 
 #root@serverless-deploy:/var/dev/engine-aws-lambda# serverless --version
 #Framework Core: 1.82.0 (standalone)
