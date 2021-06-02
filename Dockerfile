@@ -45,8 +45,8 @@ COPY destroy_terraform.sh /var/scripts/terraform/destroy.sh
 #    npm install --save-dev serverless-wsgi 
 
 RUN echo "" && terraform --version && \
-    echo "" && ansible --version && \
-    echo "" && serverless --version
+    echo "" && ansible --version 
+#    echo "" && serverless --version
 
 #root@serverless-deploy:/var/dev/engine-aws-lambda# serverless --version
 #Framework Core: 1.82.0 (standalone)
