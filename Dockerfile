@@ -33,14 +33,14 @@ RUN cd /tmp && wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.
     unzip terraform_0.14.6_linux_amd64.zip && \
     mv terraform /usr/local/bin/
 
-RUN mkdir -p /share/local /opt/helpers /opt/references /opt/scripts/serverless /opt/scripts/terraform
-COPY create_terraform.sh /opt/scripts/terraform/create.sh
-COPY destroy_terraform.sh /opt/scripts/terraform/destroy.sh
+RUN mkdir -p /share/local /var/helpers /var/references /var/scripts/serverless /var/scripts/terraform
+COPY create_terraform.sh /var/scripts/terraform/create.sh
+COPY destroy_terraform.sh /var/scripts/terraform/destroy.sh
 
 # Install Serverless
-COPY package.json /opt/templates/serverless/
+COPY package.json /var/templates/serverless/
 
-RUN cd /opt/templates/serverless && \
+RUN cd /var/templates/serverless && \
     npm i -D serverless-dotenv-plugin && \
     npm install --save-dev serverless-python-requirements && \
     npm install --save-dev serverless-domain-manager && \
@@ -51,7 +51,7 @@ RUN echo "" && terraform --version
 RUN echo "" && ansible --version
 RUN echo "" && serverless --version
 
-#root@serverless-deploy:/opt/dev/engine-aws-lambda# serverless --version
+#root@serverless-deploy:/var/dev/engine-aws-lambda# serverless --version
 #Framework Core: 1.82.0 (standalone)
 #Plugin: 3.8.3
 #SDK: 2.3.1
