@@ -24,6 +24,7 @@ RUN apt-get update -y && apt-get install docker-ce -y
 # Install Ansible
 RUN pip install ansible
 RUN pip install awslogs
+RUN pip install awscli
 
 RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
