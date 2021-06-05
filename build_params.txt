@@ -1,1 +1,2 @@
-export DOCKER_IMAGE=gear2000/jiffy-base:builds.ubuntu.18.04
+export DOCKER_USER=gear2000
+export DOCKER_IMAGE=${DOCKER_USER}/jiffy-base:builds.ubuntu.18.04
